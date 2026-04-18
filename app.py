@@ -50,7 +50,7 @@ with st.form('risk_form'):
 
     # enabling full feature entry
     if mode == 'Clinical Assessment':
-        st.subheader('Lab Values')
+        st.subheader('Clinical Metrics')
         col5, col6 = st.columns(2)
         with col5:
             fbs = st.number_input('Fasting Blood Sugar (mg/dL)', 70.0, 200.0, 100.0)
@@ -96,7 +96,7 @@ if submitted:
     if mode == 'Self Assessment':
         input_df = pd.DataFrame([user_data])[accessible_features]
         input_scaled = scaler_accessible.transform(input_df)
-        proba = log_reg_accessible.predict_proba(input_scaled)[0, 1]
+        prob = log_reg_accessible.predict_proba(input_scaled)[0, 1]
         confidence_note = 'Based on widely accessible metrics only (lower accuracy).'
     else:
         # add all other features and fill with medians if necessary
