@@ -3,8 +3,8 @@ import pandas as pd
 import joblib
 
 # load models
-xgboost_full = joblib.load('xgboost_full.pkl')                                          
-log_reg_accessible = joblib.load('log_reg_accessible.pkl')
+xgboost_full = joblib.load('xgboost_full.pkl')
+svc_accessible = joblib.load('svc_accessible.pkl')
 
 # load scalers
 scaler_full = joblib.load('scaler_full.pkl')
@@ -59,7 +59,7 @@ with st.form('risk_form'):
             sys_bp = st.number_input('Systolic BP', 90, 180, 120)
             dia_bp = st.number_input('Diastolic BP', 60, 120, 80)
 
-    submitted = st.form_submit_button('Assess My Risk')
+    submitted = st.form_submit_button('Assess')
 
 # form submission
 if submitted:
@@ -96,7 +96,7 @@ if submitted:
     if mode == 'Self Assessment':
         input_df = pd.DataFrame([user_data])[accessible_features]
         input_scaled = scaler_accessible.transform(input_df)
-        prob = log_reg_accessible.predict_proba(input_scaled)[0, 1]
+        prob = svc_accessible.predict_proba(input_scaled)[0, 1]
         confidence_note = 'Based on widely accessible metrics only (lower accuracy).'
     else:
         # add all other features and fill with medians if necessary
@@ -128,14 +128,15 @@ if submitted:
 
     # display results
     st.markdown('---')
-    st.subheader('Your Results')
+    st.subheader('Assessment Results')
 
-    if prob < 0.33:
-        st.success(f'**Low Risk** - {prob * 100:.2f}%')
-    elif prob < 0.66:
-        st.warning(f'**Moderate Risk** - {prob * 100:.2f}%')
+    if prob < 0.4:
+        st.success(f'**Not Diabetic** - {prob * 100:.2f}%')
+        if prob > 0.30:
+            st.caption('Note: Your result is close to the assessment threshold. Consider follow-up testing.')
     else:
-        st.error(f'**High Risk** - {prob * 100:.2f}%')
+        st.error(f'**Diabetic** - {prob * 100:.2f}%')
+        st.caption('Follow-up testing highly recommended.')
 
     st.progress(float(prob))
     st.caption(confidence_note)
