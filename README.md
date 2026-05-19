@@ -4,7 +4,9 @@
 
 SJSU CMPE 257 — Machine Learning
 
-🔗 **Live app:** https://diabetes-screening.streamlit.app/
+**Live App:** https://diabetes-screening.streamlit.app/
+
+**Google Colab Notebook:** https://colab.research.google.com/drive/1zZ6ldGv7xsHl7SvobXOVr-Gs811-u66i?usp=sharing
 
 \---
 
@@ -25,7 +27,7 @@ inputs to produce a preliminary risk indication.
 measurements (fasting blood sugar, HbA1c, blood pressure) for a more reliable
 estimate.
 
-> ⚠️ \*\*Disclaimer:\*\* This tool is for \*\*educational purposes only\*\* and is \*\*not a
+> \*\*Disclaimer:\*\* This tool is for \*\*educational purposes only\*\* and is \*\*not a
 > medical diagnosis\*\*. It should not be used as a substitute for professional
 > medical advice, diagnosis, or treatment. Always consult a qualified healthcare
 > provider regarding any medical concern.
